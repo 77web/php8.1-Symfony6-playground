@@ -3,8 +3,10 @@
 namespace App\Form;
 
 use App\Domain\Data\Contact;
+use App\Domain\Enum\Age;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\EnumType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -14,14 +16,8 @@ class ContactType extends AbstractType
     {
         $builder
             ->add('name')
-            ->add('age', ChoiceType::class, [
-                'choices' => [
-                    'U19' => 'TEENAGER',
-                    'U29' => 'AGE_20_TO_29',
-                    'U39' => 'AGE_30_TO_39',
-                    'U49' => 'AGE_40_TO_49',
-                    'OVER50' => 'OVER_50',
-                ],
+            ->add('age', EnumType::class, [
+                'class' => Age::class,
             ])
             ->add('interests', ChoiceType::class, [
                 'choices' => [
