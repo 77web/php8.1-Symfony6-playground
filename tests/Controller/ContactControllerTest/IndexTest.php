@@ -16,4 +16,22 @@ class IndexTest extends WebTestCase
         $this->assertTrue($crawler->filter('form')->count() === 1);
         $this->assertEquals('フォーム', $crawler->filter('title')->text());
     }
+
+    public function test_フォーム送信()
+    {
+        $client = static::createClient();
+        $crawler = $client->request('GET', '/contact');
+        $response = $client->getResponse();
+        $this->assertTrue($response->isOk(), (string) $response->getContent());
+
+        $form = $crawler->selectButton('フォーム送信')->form();
+        $form['name'] = '77web';
+        $form['age'] = 3;
+        $form['interests']->select('php');
+        $form['opinion'] = 'enum is great';
+        $client->submit($form);
+
+        $sendResponse = $client->getResponse();
+        $this->assertTrue($sendResponse->isRedirect('/contact/thanks'), (string) $sendResponse->getStatusCode());
+    }
 }
