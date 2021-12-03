@@ -22,6 +22,7 @@ class ContactType extends AbstractType
             ->add('interests', EnumType::class, [
                 'class' => Interest::class,
                 'multiple' => true,
+                'expanded' => true,
             ])
             ->add('opinion')
         ;

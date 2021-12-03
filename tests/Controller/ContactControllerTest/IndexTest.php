@@ -27,7 +27,7 @@ class IndexTest extends WebTestCase
         $form = $crawler->selectButton('フォーム送信')->form();
         $form['name'] = '77web';
         $form['age'] = 3;
-        $form['interests']->select('php');
+        $form['interests[0]']->tick();
         $form['opinion'] = 'enum is great';
         $client->submit($form);
 
