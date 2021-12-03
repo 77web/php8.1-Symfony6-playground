@@ -2,17 +2,42 @@
 
 namespace App\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Response;
+use App\Form\ContactType;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Component\Form\FormFactoryInterface;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
-class ContactController extends AbstractController
+class ContactController
 {
+    public function __construct(
+        private FormFactoryInterface  $formFactory,
+        private UrlGeneratorInterface $urlGenerator,
+    ) {
+    }
+
     #[Route('/contact', name: 'contact')]
-    public function index(): Response
+    #[Template]
+    public function index(Request $request): array|RedirectResponse
     {
-        return $this->render('contact/index.html.twig', [
-            'controller_name' => 'ContactController',
-        ]);
+        $form = $this->formFactory->createNamed('', ContactType::class);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            // TODO send mail to us :)
+            return new RedirectResponse($this->urlGenerator->generate('contact_thanks'));
+        }
+
+        return [
+            'form' => $form->createView(),
+        ];
+    }
+
+    #[Route('/contact/thanks', name: 'contact_thanks')]
+    #[Template]
+    public function thanks(): array
+    {
+        return [];
     }
 }
