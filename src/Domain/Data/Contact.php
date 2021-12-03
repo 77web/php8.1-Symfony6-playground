@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace App\Domain\Data;
 
 use App\Domain\Enum\Age;
+use App\Domain\Enum\Interest;
 use Symfony\Component\Validator\Constraints as Assert;
 
 class Contact
@@ -57,15 +58,15 @@ class Contact
     }
 
     /**
-     * @return array|null
+     * @return Interest[]
      */
-    public function getInterests(): ?array
+    public function getInterests(): array
     {
-        return $this->interests;
+        return $this->interests ?? [];
     }
 
     /**
-     * @param array|null $interests
+     * @param null|Interest[] $interests
      * @return Contact
      */
     public function setInterests(?array $interests): self
