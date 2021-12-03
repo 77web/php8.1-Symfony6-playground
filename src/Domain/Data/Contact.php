@@ -3,11 +3,20 @@ declare(strict_types=1);
 
 namespace App\Domain\Data;
 
+use Symfony\Component\Validator\Constraints as Assert;
+
 class Contact
 {
+    #[Assert\NotBlank]
     private ?string $name = null;
+
+    #[Assert\NotBlank]
     private ?string $age = null;
+
+    #[Assert\Count(min: 1)]
     private ?array $interests = [];
+
+    #[Assert\NotBlank]
     private ?string $opinion = null;
 
     /**
