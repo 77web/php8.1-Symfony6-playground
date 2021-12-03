@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace App\Domain\Data;
 
+use App\Domain\Enum\Age;
 use Symfony\Component\Validator\Constraints as Assert;
 
 class Contact
@@ -11,7 +12,7 @@ class Contact
     private ?string $name = null;
 
     #[Assert\NotBlank]
-    private ?string $age = null;
+    private ?Age $age = null;
 
     #[Assert\Count(min: 1)]
     private ?array $interests = [];
@@ -38,18 +39,18 @@ class Contact
     }
 
     /**
-     * @return string|null
+     * @return Age|null
      */
-    public function getAge(): ?string
+    public function getAge(): ?Age
     {
         return $this->age;
     }
 
     /**
-     * @param string|null $age
+     * @param Age|null $age
      * @return Contact
      */
-    public function setAge(?string $age): self
+    public function setAge(?Age $age): self
     {
         $this->age = $age;
         return $this;
